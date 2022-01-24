@@ -1,0 +1,22 @@
+{
+  "name": "@quentinpigne/create-node-app",
+  "version": "0.0.1-SNAPSHOT",
+  "keywords": [
+    "node",
+    "starter"
+  ],
+  "description": "Initializer for node application",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/quentinpigne/create-node-app.git"
+  },
+  "author": "Quentin Pigné",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  },
+  "bin": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
