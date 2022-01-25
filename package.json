@@ -5,7 +5,7 @@
     "node",
     "starter"
   ],
-  "description": "Initializer for node application",
+  "description": "A multi-framework initializer for Node.js application",
   "repository": {
     "type": "git",
     "url": "https://github.com/quentinpigne/create-node-app.git"
