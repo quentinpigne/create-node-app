@@ -12,7 +12,7 @@ const packageJson = require('./package.json');
 const config = require('./lib/config');
 const { generatePackageJson } = require('./lib/generators');
 
-const argsAndOptions = () => {
+const nameAndOptions = () => {
   let projectName;
   const program = new commander.Command(packageJson.name)
     .version(packageJson.version)
@@ -25,17 +25,19 @@ const argsAndOptions = () => {
 };
 
 async function init() {
-  const options = argsAndOptions();
+  const { projectName, ...options } = nameAndOptions();
+  const projectPath = path.resolve(projectName);
   const starterConfig = await config.getConfig(options.config);
 
-  createNodeApp(options, starterConfig);
+  const context = { cliVersion: packageJson.version, projectName, projectPath, config: starterConfig };
+
+  createNodeApp(context);
 }
 
-function createNodeApp(options, starterConfig) {
-  const projectPath = path.resolve(options.projectName);
-  fs.ensureDirSync(projectPath);
+function createNodeApp(context) {
+  fs.ensureDirSync(context.projectPath);
 
-  generatePackageJson(projectPath, options);
+  generatePackageJson(context);
 }
 
 init();
