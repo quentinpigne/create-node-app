@@ -10,7 +10,7 @@ const path = require('path');
 const packageJson = require('./package.json');
 
 const config = require('./lib/config');
-const { generatePackageJson } = require('./lib/generators');
+const { generatePackageJson, generateReadme } = require('./lib/generators');
 
 const nameAndOptions = () => {
   let projectName;
@@ -38,6 +38,7 @@ function createNodeApp(context) {
   fs.ensureDirSync(context.projectPath);
 
   generatePackageJson(context);
+  generateReadme(context);
 }
 
 init();
