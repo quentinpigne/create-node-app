@@ -10,6 +10,7 @@ const path = require('path');
 const packageJson = require('./package.json');
 
 const config = require('./lib/config');
+const { generatePackageJson } = require('./lib/generators');
 
 const argsAndOptions = () => {
   let projectName;
@@ -27,20 +28,14 @@ async function init() {
   const options = argsAndOptions();
   const starterConfig = await config.getConfig(options.config);
 
-  createNodeApp(options.projectName);
+  createNodeApp(options, starterConfig);
 }
 
-function createNodeApp(projectName) {
-  const root = path.resolve(projectName);
-  const appName = path.basename(root);
+function createNodeApp(options, starterConfig) {
+  const projectPath = path.resolve(options.projectName);
+  fs.ensureDirSync(projectPath);
 
-  fs.ensureDirSync(root);
-
-  const packageJson = {
-    name: appName,
-    version: '0.0.1-SNAPSHOT',
-  };
-  fs.writeFileSync(path.join(root, 'package.json'), JSON.stringify(packageJson, null, 2) + os.EOL);
+  generatePackageJson(projectPath, options);
 }
 
 init();
