@@ -1,0 +1,31 @@
+const dotenv = require('dotenv');
+const nconf = require('nconf');
+const async = require('async');
+
+const logger = require('./lib/logger');
+
+// Load Environment variables from .env file
+dotenv.config();
+
+// Set up configs
+nconf.use('memory');
+// First load command line arguments
+nconf.argv();
+// Load environment variables
+nconf.env();
+// Load config file for the environment
+nconf.file(`./config/environments/${nconf.get('NODE_ENV')}.json`);
+
+logger.info('[APP] Starting server initialization');
+
+// Initialize Modules
+async.series(
+  [],
+  error => {
+    if (error) {
+      logger.error('[APP] Initialization failed');
+    } else {
+      logger.info('[APP] Initialized successfully');
+    }
+  },
+);

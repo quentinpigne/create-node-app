@@ -6,11 +6,12 @@ const commander = require('commander');
 const fs = require('fs-extra');
 const os = require('os');
 const path = require('path');
+const spawn = require('cross-spawn');
 
 const packageJson = require('./package.json');
 
 const config = require('./lib/config');
-const { generatePackageJson, generateReadme } = require('./lib/generators');
+const { generatePackageJson, generateReadme, generateIndex, generateLogger } = require('./lib/generators');
 
 const nameAndOptions = () => {
   let projectName;
@@ -31,14 +32,30 @@ async function init() {
 
   const context = { cliVersion: packageJson.version, projectName, projectPath, config: starterConfig };
 
+  fs.ensureDirSync(context.projectPath);
+  process.chdir(projectPath);
+
+  addDependencies();
   createNodeApp(context);
 }
 
-function createNodeApp(context) {
-  fs.ensureDirSync(context.projectPath);
+function addDependencies() {
+  const command = 'pnpm';
+  const args = [
+    'add',
+    'async',
+    'dotenv',
+    'nconf',
+    'winston',
+  ];
+  spawn(command, args, { stdio: 'inherit' });
+}
 
+function createNodeApp(context) {
   generatePackageJson(context);
   generateReadme(context);
+  generateLogger(context);
+  generateIndex(context);
 }
 
 init();
