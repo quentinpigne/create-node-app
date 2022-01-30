@@ -35,14 +35,15 @@ async function init() {
   fs.ensureDirSync(context.projectPath);
   process.chdir(projectPath);
 
-  addDependencies();
+  addDependencies(context.config.package_manager);
   createNodeApp(context);
 }
 
-function addDependencies() {
-  const command = 'pnpm';
+function addDependencies(package_manager) {
+  const command = package_manager;
+  const installCommand = package_manager === 'npm' ? 'install' : 'add';
   const args = [
-    'add',
+    installCommand,
     'async',
     'dotenv',
     'nconf',
