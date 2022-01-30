@@ -6,6 +6,7 @@ const commander = require('commander');
 const fs = require('fs-extra');
 const os = require('os');
 const path = require('path');
+const spawn = require('cross-spawn');
 
 const packageJson = require('./package.json');
 
@@ -39,6 +40,10 @@ async function init() {
   generators.generateReadme(context);
 
   installDependencies(context.config);
+
+  if (context.config.language === 'typescript') {
+    spawn.sync('npx', ['tsc', '--init'], { stdio: 'inherit' });
+  }
 
   generators.generateLogger(context);
   generators.generateIndex(context);
