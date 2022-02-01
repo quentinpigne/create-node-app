@@ -3,6 +3,9 @@ const nconf = require('nconf');
 const async = require('async');
 
 const logger = require('./lib/logger');
+{{#each initializers}}
+const init{{capitalize this}} = require('./config/initializers/{{this}}.js');
+{{/each}}
 
 // Load Environment variables from .env file
 dotenv.config();
@@ -20,7 +23,9 @@ logger.info('[APP] Starting server initialization');
 
 // Initialize Modules
 async.series(
-  [],
+  [{{#each initializers}}
+    (callback) => init{{capitalize this}}(callback),
+  {{/each}}],
   error => {
     if (error) {
       logger.error('[APP] Initialization failed');

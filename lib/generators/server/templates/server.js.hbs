@@ -1,0 +1,29 @@
+const http = require('http');
+const nconf = require('nconf');
+
+const logger = require('../../lib/logger')
+
+module.exports = function (callback) {
+  const server = http.createServer();
+  const port = nconf.get('NODE_PORT');
+
+  server.on('request', (request, response) => {
+    switch (request.url) {
+      default:
+        response.statusCode = 404;
+        response.end();
+    }
+  })
+
+  server
+    .listen(port, () => {
+      logger.info(`[SERVER] Listening on port ${port}`);
+      callback();
+    })
+    .on('error', function (error) {
+      if (error.code === 'EADDRINUSE') {
+        logger.error(`[SERVER] Port ${port} is busy`);
+      }
+      callback(error);
+    });
+}

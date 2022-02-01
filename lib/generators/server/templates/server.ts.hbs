@@ -1,0 +1,35 @@
+import nconf from 'nconf';
+import http, { Server, IncomingMessage, ServerResponse } from 'http';
+
+import logger from '../../lib/logger';
+
+interface Error {
+  name: string;
+  message: string;
+  status: number;
+}
+
+export default function (callback: (err?: Error | null) => void) {
+  const server: Server = http.createServer();
+  const port: number = nconf.get('NODE_PORT');
+
+  server.on('request', (request: IncomingMessage, response: ServerResponse) => {
+    switch (request.url) {
+      default:
+        response.statusCode = 404;
+        response.end();
+    }
+  })
+
+  server
+    .listen(port, () => {
+      logger.info(`[SERVER] Listening on port ${port}`);
+      callback();
+    })
+    .on('error', function (error: Error & { code: string }) {
+      if (error.code === 'EADDRINUSE') {
+        logger.error(`[SERVER] Port ${port} is busy`);
+      }
+      callback(error);
+    });
+}

@@ -49,6 +49,7 @@ async function init() {
 
   generators.generateLogger(context);
   generators.generateIndex(context);
+  if (context.config.server_side && context.config.framework === 'none') generators.generateServer(context);
 }
 
 init();
