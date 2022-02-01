@@ -36,6 +36,8 @@ async function init() {
   fs.ensureDirSync(context.projectPath);
   process.chdir(projectPath);
 
+  fs.copySync(path.join(__dirname, '/lib/static'), projectPath);
+
   generators.generatePackageJson(context);
   generators.generateReadme(context);
 
