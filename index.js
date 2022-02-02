@@ -6,12 +6,12 @@ const commander = require('commander');
 const fs = require('fs-extra');
 const os = require('os');
 const path = require('path');
+const requireDir = require('require-dir');
 const spawn = require('cross-spawn');
 
 const packageJsonCli = require('./package.json');
 
 const config = require('./lib/config');
-const generators = require('./lib/generators');
 const packageJson = require('./lib/package-json');
 const installDependencies = require('./lib/install');
 
@@ -47,10 +47,11 @@ async function init() {
     spawn.sync('npx', ['tsc', '--init'], { stdio: 'inherit' });
   }
 
-  generators.generateReadme(context);
-  generators.generateLogger(context);
-  generators.generateIndex(context);
-  if (context.config.server_side && context.config.framework === 'none') generators.generateServer(context);
+  const generators = requireDir(path.join(__dirname, 'lib', 'generators'), {
+    recurse: true,
+    filter: (fullPath) => !fullPath.match('templates'),
+  });
+  Object.values(generators).forEach((generator) => generator.index(context));
 }
 
 init();
