@@ -8,16 +8,17 @@ const os = require('os');
 const path = require('path');
 const spawn = require('cross-spawn');
 
-const packageJson = require('./package.json');
+const packageJsonCli = require('./package.json');
 
 const config = require('./lib/config');
 const generators = require('./lib/generators');
+const packageJson = require('./lib/package-json');
 const installDependencies = require('./lib/install');
 
 const nameAndOptions = () => {
   let projectName;
-  const program = new commander.Command(packageJson.name)
-    .version(packageJson.version)
+  const program = new commander.Command(packageJsonCli.name)
+    .version(packageJsonCli.version)
     .argument('<project-name>', 'The name of the project (used for directory name)')
     .action((name) => (projectName = name))
     .option('-c, --config <config-file>', 'The path to the config file (optionnal)')
@@ -31,15 +32,14 @@ async function init() {
   const projectPath = path.resolve(projectName);
   const starterConfig = await config.getConfig(options.config);
 
-  const context = { cliVersion: packageJson.version, projectName, projectPath, config: starterConfig };
+  const context = { cliVersion: packageJsonCli.version, projectName, projectPath, config: starterConfig };
 
   fs.ensureDirSync(context.projectPath);
   process.chdir(projectPath);
 
   fs.copySync(path.join(__dirname, '/lib/static'), projectPath);
 
-  generators.generatePackageJson(context);
-  generators.generateReadme(context);
+  fs.writeFileSync(path.join(projectPath, 'package.json'), JSON.stringify(packageJson(context), null, 2) + os.EOL);
 
   installDependencies(context.config);
 
@@ -47,6 +47,7 @@ async function init() {
     spawn.sync('npx', ['tsc', '--init'], { stdio: 'inherit' });
   }
 
+  generators.generateReadme(context);
   generators.generateLogger(context);
   generators.generateIndex(context);
   if (context.config.server_side && context.config.framework === 'none') generators.generateServer(context);
