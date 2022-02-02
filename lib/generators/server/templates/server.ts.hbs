@@ -1,13 +1,7 @@
 import nconf from 'nconf';
-import http, { Server, IncomingMessage, ServerResponse } from 'http';
+import http, { IncomingMessage, Server, ServerResponse } from 'http';
 
 import logger from '../../lib/logger';
-
-interface Error {
-  name: string;
-  message: string;
-  status: number;
-}
 
 export default function (callback: (err?: Error | null) => void) {
   const server: Server = http.createServer();
@@ -17,7 +11,7 @@ export default function (callback: (err?: Error | null) => void) {
     switch (request.url) {
       default:
         response.statusCode = 404;
-        response.end();
+        response.end(JSON.stringify({ message: 'Not Found' }));
     }
   })
 

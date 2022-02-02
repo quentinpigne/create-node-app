@@ -11,7 +11,7 @@ module.exports = function (callback) {
     switch (request.url) {
       default:
         response.statusCode = 404;
-        response.end();
+        response.end(JSON.stringify({ message: 'Not Found' }));
     }
   })
 
