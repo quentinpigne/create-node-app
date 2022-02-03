@@ -37,7 +37,12 @@ async function init() {
   fs.ensureDirSync(context.projectPath);
   process.chdir(projectPath);
 
-  fs.copySync(path.join(__dirname, '/lib/static'), projectPath);
+  fs.copySync(path.join(__dirname, '/lib/static'), projectPath, {
+    filter: (src) => {
+      if (!context.config.prettier && src.match('.prettierrc')) return false;
+      return true;
+    },
+  });
 
   fs.writeFileSync(path.join(projectPath, 'package.json'), JSON.stringify(packageJson(context), null, 2) + os.EOL);
 
