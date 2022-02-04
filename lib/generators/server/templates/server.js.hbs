@@ -1,19 +1,11 @@
-const http = require('http');
 const nconf = require('nconf');
+{{#if noFramework}}const http = require('http');{{/if}}
 
 const logger = require('../../lib/logger')
 
 module.exports = function (callback) {
-  const server = http.createServer();
   const port = nconf.get('NODE_PORT');
-
-  server.on('request', (request, response) => {
-    switch (request.url) {
-      default:
-        response.statusCode = 404;
-        response.end(JSON.stringify({ message: 'Not Found' }));
-    }
-  })
+  {{> (framework)}}
 
   server
     .listen(port, () => {

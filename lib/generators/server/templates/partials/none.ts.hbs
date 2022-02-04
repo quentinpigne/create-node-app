@@ -1,0 +1,9 @@
+const server: Server = http.createServer();
+
+server.on('request', (request: IncomingMessage, response: ServerResponse) => {
+  switch (request.url) {
+    default:
+      response.statusCode = 404;
+      response.end(JSON.stringify({ message: 'Not Found' }));
+  }
+})

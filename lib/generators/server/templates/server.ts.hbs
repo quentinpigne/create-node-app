@@ -1,19 +1,11 @@
 import nconf from 'nconf';
-import http, { IncomingMessage, Server, ServerResponse } from 'http';
+{{#if noFramework}}import http, { IncomingMessage, Server, ServerResponse } from 'http';{{/if}}
 
 import logger from '../../lib/logger';
 
 export default function (callback: (err?: Error | null) => void) {
-  const server: Server = http.createServer();
   const port: number = nconf.get('NODE_PORT');
-
-  server.on('request', (request: IncomingMessage, response: ServerResponse) => {
-    switch (request.url) {
-      default:
-        response.statusCode = 404;
-        response.end(JSON.stringify({ message: 'Not Found' }));
-    }
-  })
+  {{> (framework)}}
 
   server
     .listen(port, () => {
