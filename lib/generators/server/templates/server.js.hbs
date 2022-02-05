@@ -1,13 +1,13 @@
 const nconf = require('nconf');
-{{#if noFramework}}const http = require('http');{{/if}}
+{{> (headersPartial)}}
 
 const logger = require('../../lib/logger')
 
 module.exports = function (callback) {
   const port = nconf.get('NODE_PORT');
-  {{> (framework)}}
+  {{> (corePartial)}}
 
-  server
+  {{#if noFramework}}server{{else}}app{{/if}}
     .listen(port, () => {
       logger.info(`[SERVER] Listening on port ${port}`);
       callback();

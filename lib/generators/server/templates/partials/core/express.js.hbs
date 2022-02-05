@@ -1,0 +1,30 @@
+const app = express();
+
+app.use(cors());
+app.use(morgan('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Catch 404 and forward to error handler
+app.use((req, res, next) => {
+  next({ message: 'Not Found', status: 404 });
+});
+
+// Error handlers
+app.use((err, req, res, next) => {
+  /**
+    * Handle 401 thrown by express-jwt library
+    */
+  if (err.name === 'UnauthorizedError') {
+    return res.status(err.status).send({ message: err.message }).end();
+  }
+  return next(err);
+});
+
+app.use(function (err, req, res, next) {
+  res.status(err.status || 500);
+  res.json({
+    message: err.message,
+    error: app.get('env') === 'development' ? err : {},
+  });
+});
