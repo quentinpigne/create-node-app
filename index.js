@@ -14,6 +14,7 @@ const packageJsonCli = require('./package.json');
 const config = require('./lib/config');
 const packageJson = require('./lib/package-json');
 const installDependencies = require('./lib/install');
+const writeEnvironmentFiles = require('./lib/environment');
 
 const nameAndOptions = () => {
   let projectName;
@@ -51,6 +52,8 @@ async function init() {
   if (context.config.language === 'typescript') {
     spawn.sync('npx', ['tsc', '--init'], { stdio: 'inherit' });
   }
+
+  writeEnvironmentFiles(context);
 
   const generators = requireDir(path.join(__dirname, 'lib', 'generators'), {
     recurse: true,
