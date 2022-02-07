@@ -2,6 +2,9 @@ const nconf = require('nconf');
 {{> (headersPartial)}}
 
 const logger = require('../../lib/logger')
+{{#if routing}}
+const routes = require('../../app/routes');
+{{/if}}
 
 module.exports = function (callback) {
   const port = nconf.get('NODE_PORT');
