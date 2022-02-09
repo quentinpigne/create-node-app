@@ -1,7 +1,12 @@
 import { Router } from 'express';
 import { paramCase } from 'change-case';
+{{#if helloEndpoint}}
 
-const routes: { [key: string]: () => Router } = {
+import hello from './hello';
+{{/if}}
+
+const routes: { [key: string]: () => Router } = { {{#if helloEndpoint}}
+  hello,{{/if}}
 };
 
 export default () => {

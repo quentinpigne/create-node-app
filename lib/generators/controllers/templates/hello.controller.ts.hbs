@@ -1,0 +1,10 @@
+import { NextFunction, Request, Response } from 'express';
+
+export const hello = (req: Request, res: Response, next: NextFunction) => {
+  try {
+    res.json({ message: 'Hello world!'});
+  } catch (err: any) {
+    console.error(`Error while processing request`, err.message);
+    next(err);
+  }
+}
