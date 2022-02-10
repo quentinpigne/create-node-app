@@ -1,1 +1,7 @@
 const http = require('http');
+
+const logger = require('../../lib/logger');
+{{#if helloEndpoint}}
+
+const helloController = require('../../app/controllers/hello.controller');
+{{/if}}

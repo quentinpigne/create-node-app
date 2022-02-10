@@ -2,6 +2,11 @@ const server = http.createServer();
 
 server.on('request', (request, response) => {
   switch (request.url) {
+    {{#if helloEndpoint}}
+    case '/hello':
+      helloController.hello(request, response);
+      break;
+    {{/if}}
     default:
       response.statusCode = 404;
       response.end(JSON.stringify({ message: 'Not Found' }));

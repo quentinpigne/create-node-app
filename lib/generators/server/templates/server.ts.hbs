@@ -1,19 +1,6 @@
 import nconf from 'nconf';
 {{> (headersPartial)}}
 
-import logger from '../../lib/logger';
-{{#if expressFramework}}
-{{#if routing}}
-import routes from '../../app/routes';
-{{/if}}
-
-interface Error {
-  name: string;
-  message: string;
-  status: number;
-}
-{{/if}}
-
 export default function (callback: (err?: Error | null) => void) {
   const port: number = nconf.get('NODE_PORT');
   {{> (corePartial)}}

@@ -2,3 +2,14 @@ import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+
+import logger from '../../lib/logger';
+{{#if routing}}
+import routes from '../../app/routes';
+{{/if}}
+
+interface Error {
+  name: string;
+  message: string;
+  status: number;
+}

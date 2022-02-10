@@ -1,1 +1,7 @@
 import http, { IncomingMessage, Server, ServerResponse } from 'http';
+
+import logger from '../../lib/logger';
+{{#if helloEndpoint}}
+
+import { hello } from '../../app/controllers/hello.controller';
+{{/if}}
