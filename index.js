@@ -55,6 +55,10 @@ async function init() {
 
   writeEnvironmentFiles(context);
 
+  if (context.config.serve_static) {
+    fs.ensureDirSync(path.join(context.projectPath, 'public'));
+  }
+
   const generators = requireDir(path.join(__dirname, 'lib', 'generators'), {
     recurse: true,
     filter: (fullPath) => !fullPath.match('templates|handlebars'),
