@@ -57,7 +57,7 @@ async function init() {
 
   const generators = requireDir(path.join(__dirname, 'lib', 'generators'), {
     recurse: true,
-    filter: (fullPath) => !fullPath.match('templates|utils'),
+    filter: (fullPath) => !fullPath.match('templates|handlebars'),
   });
   Object.values(generators).forEach((generator) => generator.index(context));
 }
