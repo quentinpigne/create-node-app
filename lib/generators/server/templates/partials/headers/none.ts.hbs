@@ -1,4 +1,5 @@
 import http, { IncomingMessage, Server, ServerResponse } from 'http';
+import morgan from 'morgan';
 
 import logger from '../../lib/logger';
 {{#if helloEndpoint}}

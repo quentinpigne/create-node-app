@@ -1,14 +1,16 @@
 const server: Server = http.createServer();
 
 server.on('request', (request: IncomingMessage, response: ServerResponse) => {
-  switch (request.url) {
-    {{#if helloEndpoint}}
-    case '/hello':
-      hello(request, response);
-      break;
-    {{/if}}
-    default:
-      response.statusCode = 404;
-      response.end(JSON.stringify({ message: 'Not Found' }));
-  }
-})
+  morgan('dev')(request, response, (error) => {
+    switch (request.url) {
+      {{#if helloEndpoint}}
+      case '/hello':
+        hello(request, response);
+        break;
+      {{/if}}
+      default:
+        response.statusCode = 404;
+        response.end(JSON.stringify({ message: 'Not Found' }));
+    }
+  });
+});
