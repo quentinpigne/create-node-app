@@ -2,7 +2,7 @@ const dotenv = require('dotenv');
 const nconf = require('nconf');
 const async = require('async');
 
-const logger = require('./lib/logger');
+const {{#if pinoLogger}}{ logger }{{else}}logger{{/if}} = require('./lib/logger');
 {{#each initializers}}
 const init{{capitalize this}} = require('./config/initializers/{{this}}.js');
 {{/each}}

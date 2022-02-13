@@ -1,7 +1,7 @@
 const http = require('http');
 const morgan = require('morgan');
 
-const logger = require('../../lib/logger');
+const {{#if pinoLogger}}{ logger, httpLogger }{{else}}logger{{/if}} = require('../../lib/logger');
 {{#if helloEndpoint}}
 
 const helloController = require('../../app/controllers/hello.controller');

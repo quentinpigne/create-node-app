@@ -1,0 +1,17 @@
+const pino = require('pino');
+const pinoHttp = require('pino-http');
+
+const logger = pino({
+  transport: {
+    target: 'pino-pretty'
+  },
+});
+
+const httpLogger = pinoHttp({
+  logger: logger,
+});
+
+module.exports = {
+  httpLogger,
+  logger,
+};

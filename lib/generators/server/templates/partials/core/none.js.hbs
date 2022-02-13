@@ -1,6 +1,9 @@
 const server = http.createServer();
 
 server.on('request', (request, response) => {
+  {{#if pinoLogger}}
+  httpLogger(request, response);
+  {{/if}}
   morgan('dev')(request, response, function(error) {
     switch (request.url) {
       {{#if helloEndpoint}}

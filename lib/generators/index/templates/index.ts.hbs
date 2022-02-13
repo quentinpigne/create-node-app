@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import nconf from 'nconf';
 import async from 'async';
 
-import logger from './lib/logger';
+import {{#if pinoLogger}}{ logger }{{else}}logger{{/if}} from './lib/logger';
 {{#each initializers}}
 import init{{capitalize this}} from './config/initializers/{{this}}';
 {{/each}}
