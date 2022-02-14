@@ -2,6 +2,9 @@ const http = require('http');
 const morgan = require('morgan');
 
 const {{#if pinoLogger}}{ logger, httpLogger }{{else}}logger{{/if}} = require('../../lib/logger');
+{{#if monitoring}}
+const register = require('../../lib/prometheus');
+{{/if}}
 {{#if helloEndpoint}}
 
 const helloController = require('../../app/controllers/hello.controller');

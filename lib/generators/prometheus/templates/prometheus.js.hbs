@@ -1,0 +1,4 @@
+const { collectDefaultMetrics, register } = require('prom-client');
+collectDefaultMetrics();
+
+module.exports = register;

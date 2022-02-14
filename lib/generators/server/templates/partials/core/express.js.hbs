@@ -15,6 +15,14 @@ app.use(nconf.get('api:prefix'), routes());
 
 app.use(express.static(path.resolve(__dirname, '../../public')));
 {{/if}}
+{{#if monitoring}}
+
+app.use('/metrics', async (req, res, next) => {
+  const metrics = await register.metrics();
+  res.type('text/plain');
+  res.send(metrics);
+});
+{{/if}}
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {

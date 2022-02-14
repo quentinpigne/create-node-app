@@ -5,6 +5,9 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 
 import {{#if pinoLogger}}{ logger, httpLogger }{{else}}logger{{/if}} from '../../lib/logger';
+{{#if monitoring}}
+import register from '../../lib/prometheus';
+{{/if}}
 {{#if routing}}
 import routes from '../../app/routes';
 {{/if}}

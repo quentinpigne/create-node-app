@@ -4,11 +4,17 @@ server.on('request', (request: IncomingMessage, response: ServerResponse) => {
   {{#if pinoLogger}}
   httpLogger(request, response);
   {{/if}}
-  morgan('dev')(request, response, (error) => {
+  morgan('dev')(request, response, async (error) => {
     switch (request.url) {
       {{#if helloEndpoint}}
       case '/hello':
         hello(request, response);
+        break;
+      {{/if}}
+      {{#if monitoring}}
+      case '/metrics':
+        const metrics = await register.metrics();
+        response.end(metrics);
         break;
       {{/if}}
       default:
