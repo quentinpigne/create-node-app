@@ -1,0 +1,25 @@
+const app: Koa = new Koa();
+
+{{#if pinoLogger}}
+app.use(koaPino());
+{{/if}}
+app.use(morgan('dev'));
+
+app.use(async (ctx: Koa.ParameterizedContext, next: Koa.Next) => {
+  switch (ctx.request.url) {
+    {{#if helloEndpoint}}
+    case '/hello':
+      hello(ctx.request, ctx.response);
+      break;
+    {{/if}}
+    {{#if monitoring}}
+    case '/metrics':
+      const metrics = await register.metrics();
+      ctx.response.body = metrics;
+      break;
+    {{/if}}
+    default:
+      ctx.response.status = 404;
+      ctx.response.body = JSON.stringify({ message: 'Not Found' });
+  }
+});

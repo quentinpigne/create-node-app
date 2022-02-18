@@ -1,0 +1,14 @@
+import Koa from 'koa';
+import morgan from 'koa-morgan';
+{{#if pinoLogger}}
+import koaPino from 'koa-pino-logger';
+{{/if}}
+
+import {{#if pinoLogger}}{ logger }{{else}}logger{{/if}} from '../../lib/logger';
+{{#if monitoring}}
+import register from '../../lib/prometheus';
+{{/if}}
+{{#if helloEndpoint}}
+
+import { hello } from '../../app/controllers/hello.controller';
+{{/if}}

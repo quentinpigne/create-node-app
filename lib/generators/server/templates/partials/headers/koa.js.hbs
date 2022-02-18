@@ -1,0 +1,14 @@
+const Koa = require('koa');
+const morgan = require('koa-morgan');
+{{#if pinoLogger}}
+const koaPino = require('koa-pino-logger');
+{{/if}}
+
+const {{#if pinoLogger}}{ logger }{{else}}logger{{/if}} = require('../../lib/logger');
+{{#if monitoring}}
+const register = require('../../lib/prometheus');
+{{/if}}
+{{#if helloEndpoint}}
+
+const helloController = require('../../app/controllers/hello.controller');
+{{/if}}

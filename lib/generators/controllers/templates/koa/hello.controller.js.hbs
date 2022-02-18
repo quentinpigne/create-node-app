@@ -1,0 +1,7 @@
+const hello = (request, response) => {
+  response.body = JSON.stringify({ message: 'Hello world!'}, null, 2);
+}
+
+module.exports = {
+  hello,
+}
