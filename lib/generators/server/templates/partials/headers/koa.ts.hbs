@@ -1,6 +1,7 @@
 import path from 'path';
 import Koa from 'koa';
 import morgan from 'koa-morgan';
+import bodyParser from 'koa-bodyparser';
 {{#if pinoLogger}}
 import koaPino from 'koa-pino-logger';
 {{/if}}

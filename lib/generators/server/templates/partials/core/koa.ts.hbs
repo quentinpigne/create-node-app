@@ -1,5 +1,6 @@
 const app: Koa = new Koa();
 
+app.use(bodyParser());
 {{#if pinoLogger}}
 app.use(koaPino());
 {{/if}}

@@ -1,6 +1,7 @@
 const path = require('path');
 const Koa = require('koa');
 const morgan = require('koa-morgan');
+const bodyParser = require('koa-bodyparser');
 {{#if pinoLogger}}
 const koaPino = require('koa-pino-logger');
 {{/if}}
