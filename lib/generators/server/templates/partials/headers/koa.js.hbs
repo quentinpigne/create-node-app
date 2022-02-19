@@ -1,7 +1,11 @@
+const path = require('path');
 const Koa = require('koa');
 const morgan = require('koa-morgan');
 {{#if pinoLogger}}
 const koaPino = require('koa-pino-logger');
+{{/if}}
+{{#if serveStatic}}
+const serve = require('koa-static');
 {{/if}}
 
 const {{#if pinoLogger}}{ logger }{{else}}logger{{/if}} = require('../../lib/logger');

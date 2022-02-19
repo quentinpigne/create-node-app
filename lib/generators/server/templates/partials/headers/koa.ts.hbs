@@ -1,7 +1,11 @@
+import path from 'path';
 import Koa from 'koa';
 import morgan from 'koa-morgan';
 {{#if pinoLogger}}
 import koaPino from 'koa-pino-logger';
+{{/if}}
+{{#if serveStatic}}
+import serve from 'koa-static';
 {{/if}}
 
 import {{#if pinoLogger}}{ logger }{{else}}logger{{/if}} from '../../lib/logger';

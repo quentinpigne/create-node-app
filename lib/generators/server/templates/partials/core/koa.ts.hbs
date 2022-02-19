@@ -8,6 +8,9 @@ app.use(morgan('dev'));
 
 app.use(routes());
 {{/if}}
+{{#if serveStatic}}
+app.use(serve(path.resolve(__dirname, '../../public')));
+{{/if}}
 
 app.use(async (ctx: Koa.ParameterizedContext, next: Koa.Next) => {
   switch (ctx.request.url) {
