@@ -1,5 +1,5 @@
-const hello = (request, response) => {
-  response.body = JSON.stringify({ message: 'Hello world!'}, null, 2);
+const hello = (ctx, next) => {
+  ctx.response.body = JSON.stringify({ message: 'Hello world!'}, null, 2);
 }
 
 module.exports = {

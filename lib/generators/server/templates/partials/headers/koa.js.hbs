@@ -8,7 +8,12 @@ const {{#if pinoLogger}}{ logger }{{else}}logger{{/if}} = require('../../lib/log
 {{#if monitoring}}
 const register = require('../../lib/prometheus');
 {{/if}}
+{{#if routing}}
+
+const routes = require('../../app/routes');
+{{else}}
 {{#if helloEndpoint}}
 
 const helloController = require('../../app/controllers/hello.controller');
+{{/if}}
 {{/if}}

@@ -1,0 +1,11 @@
+import Router from 'koa-router';
+
+import * as helloController from '../controllers/hello.controller';
+
+export default () => {
+  const router: Router = new Router();
+
+  router.get('/', helloController.hello);
+
+  return router.routes();
+};

@@ -4,12 +4,16 @@ const app: Koa = new Koa();
 app.use(koaPino());
 {{/if}}
 app.use(morgan('dev'));
+{{#if routing}}
+
+app.use(routes());
+{{/if}}
 
 app.use(async (ctx: Koa.ParameterizedContext, next: Koa.Next) => {
   switch (ctx.request.url) {
-    {{#if helloEndpoint}}
+    {{#if helloEndpointNoRouting}}
     case '/hello':
-      hello(ctx.request, ctx.response);
+      hello(ctx, next);
       break;
     {{/if}}
     {{#if monitoring}}

@@ -8,7 +8,12 @@ import {{#if pinoLogger}}{ logger }{{else}}logger{{/if}} from '../../lib/logger'
 {{#if monitoring}}
 import register from '../../lib/prometheus';
 {{/if}}
+{{#if routing}}
+
+import routes from '../../app/routes';
+{{else}}
 {{#if helloEndpoint}}
 
 import { hello } from '../../app/controllers/hello.controller';
+{{/if}}
 {{/if}}
