@@ -17,7 +17,7 @@ app.use(express.static(path.resolve(__dirname, '../../public')));
 {{/if}}
 {{#if monitoring}}
 
-app.use('/metrics', async (req, res, next) => {
+app.use('/metrics', async (req, res) => {
   const metrics = await register.metrics();
   res.type('text/plain');
   res.send(metrics);
@@ -32,15 +32,15 @@ app.use((req, res, next) => {
 // Error handlers
 app.use((err, req, res, next) => {
   /**
-    * Handle 401 thrown by express-jwt library
-    */
+   * Handle 401 thrown by express-jwt library
+   */
   if (err.name === 'UnauthorizedError') {
     return res.status(err.status).send({ message: err.message }).end();
   }
   return next(err);
 });
 
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res) {
   res.status(err.status || 500);
   res.json({
     message: err.message,

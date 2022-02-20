@@ -13,7 +13,7 @@ app.use(routes());
 app.use(serve(path.resolve(__dirname, '../../public')));
 {{/if}}
 
-app.use(async (ctx: Koa.ParameterizedContext, next: Koa.Next) => {
+app.use({{#if monitoring}}async {{/if}}(ctx: Koa.ParameterizedContext{{#if helloEndpointNoRouting}}, next: Koa.Next{{/if}}) => {
   switch (ctx.request.url) {
     {{#if helloEndpointNoRouting}}
     case '/hello':
@@ -22,6 +22,7 @@ app.use(async (ctx: Koa.ParameterizedContext, next: Koa.Next) => {
     {{/if}}
     {{#if monitoring}}
     case '/metrics':
+      // eslint-disable-next-line no-case-declarations
       const metrics = await register.metrics();
       ctx.response.body = metrics;
       break;

@@ -1,4 +1,6 @@
+{{#if serveStatic}}
 const path = require('path');
+{{/if}}
 const Koa = require('koa');
 const morgan = require('koa-morgan');
 const bodyParser = require('koa-bodyparser');

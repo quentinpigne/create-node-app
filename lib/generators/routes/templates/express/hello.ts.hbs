@@ -5,9 +5,7 @@ import * as helloController from '../controllers/hello.controller';
 export default () => {
   const router: Router = Router();
 
-  router
-    .route('/')
-    .get(helloController.hello);
+  router.route('/').get(helloController.hello);
 
   return router;
 };

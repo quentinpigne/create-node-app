@@ -66,6 +66,12 @@ async function init() {
     filter: (fullPath) => !fullPath.match('templates|handlebars'),
   });
   Object.values(generators).forEach((generator) => generator.index(context));
+
+  if (context.config.prettier) {
+    spawn.sync('npx', ['prettier', `**/*.${context.config.language === 'javascript' ? 'js' : 'ts'}`, '--write'], {
+      stdio: 'inherit',
+    });
+  }
 }
 
 init();

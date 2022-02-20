@@ -5,8 +5,10 @@ import { paramCase } from 'change-case';
 import hello from './hello';
 {{/if}}
 
-const routes: { [key: string]: () => Router } = { {{#if helloEndpoint}}
-  hello,{{/if}}
+const routes: { [key: string]: () => Router } = {
+{{#if helloEndpoint}}
+  hello,
+{{/if}}
 };
 
 export default () => {

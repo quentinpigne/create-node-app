@@ -1,4 +1,6 @@
+{{#if serveStatic}}
 import path from 'path';
+{{/if}}
 import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import morgan from 'morgan';

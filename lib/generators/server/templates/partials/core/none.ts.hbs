@@ -4,7 +4,8 @@ server.on('request', (request: IncomingMessage, response: ServerResponse) => {
   {{#if pinoLogger}}
   httpLogger(request, response);
   {{/if}}
-  morgan('dev')(request, response, async (error) => {
+  {{#if monitoring}}// eslint-disable-next-line @typescript-eslint/no-misused-promises{{/if}}
+  morgan('dev')(request, response, {{#if monitoring}}async {{/if}}() => {
     switch (request.url) {
       {{#if helloEndpoint}}
       case '/hello':
@@ -13,6 +14,7 @@ server.on('request', (request: IncomingMessage, response: ServerResponse) => {
       {{/if}}
       {{#if monitoring}}
       case '/metrics':
+        // eslint-disable-next-line no-case-declarations
         const metrics = await register.metrics();
         response.end(metrics);
         break;

@@ -1,4 +1,6 @@
+{{#if serveStatic}}
 import path from 'path';
+{{/if}}
 import Koa from 'koa';
 import morgan from 'koa-morgan';
 import bodyParser from 'koa-bodyparser';

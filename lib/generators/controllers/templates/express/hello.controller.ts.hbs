@@ -2,9 +2,11 @@ import { NextFunction, Request, Response } from 'express';
 
 export const hello = (req: Request, res: Response, next: NextFunction) => {
   try {
-    res.json({ message: 'Hello world!'});
-  } catch (err: any) {
-    console.error(`Error while processing request`, err.message);
+    res.json({ message: 'Hello world!' });
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error('Error while processing request', err.message);
+    }
     next(err);
   }
-}
+};

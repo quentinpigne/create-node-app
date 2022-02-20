@@ -2,7 +2,7 @@ import nconf from 'nconf';
 {{> (headersPartial)}}
 
 export default function (callback: (err?: Error | null) => void) {
-  const port: number = nconf.get('NODE_PORT');
+  const port: number = nconf.get('NODE_PORT') as number;
   {{> (corePartial)}}
 
   {{#if noFramework}}server{{else}}app{{/if}}
@@ -16,4 +16,4 @@ export default function (callback: (err?: Error | null) => void) {
       }
       callback(error);
     });
-};
+}

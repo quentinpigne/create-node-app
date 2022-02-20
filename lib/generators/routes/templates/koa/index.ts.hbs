@@ -6,13 +6,15 @@ import { paramCase } from 'change-case';
 import hello from './hello';
 {{/if}}
 
-const routes: { [key: string]: () => IMiddleware } = { {{#if helloEndpoint}}
-  hello,{{/if}}
+const routes: { [key: string]: () => IMiddleware } = {
+{{#if helloEndpoint}}
+  hello,
+{{/if}}
 };
 
 export default () => {
   const router: Router = new Router();
-  router.prefix(nconf.get('api:prefix'))
+  router.prefix(nconf.get('api:prefix') as string);
 
   // Initialize all routes
   Object.keys(routes).forEach((routeName: string) => {

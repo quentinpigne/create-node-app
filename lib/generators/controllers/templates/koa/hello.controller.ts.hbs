@@ -1,5 +1,5 @@
 import Koa from 'koa';
 
-export const hello = (ctx: Koa.ParameterizedContext, next: Koa.Next) => {
-  ctx.response.body = JSON.stringify({ message: 'Hello world!'}, null, 2);
-}
+export const hello = (ctx: Koa.ParameterizedContext) => {
+  ctx.response.body = JSON.stringify({ message: 'Hello world!' }, null, 2);
+};
