@@ -12,6 +12,7 @@ const spawn = require('cross-spawn');
 const packageJsonCli = require('./package.json');
 
 const config = require('./lib/config');
+const writeEslintRc = require('./lib/eslintrc');
 const packageJson = require('./lib/package-json');
 const installDependencies = require('./lib/install');
 const writeEnvironmentFiles = require('./lib/environment');
@@ -53,6 +54,7 @@ async function init() {
     spawn.sync('npx', ['tsc', '--init'], { stdio: 'inherit' });
   }
 
+  if (context.config.eslint) writeEslintRc(context);
   writeEnvironmentFiles(context);
 
   if (context.config.serve_static) {
