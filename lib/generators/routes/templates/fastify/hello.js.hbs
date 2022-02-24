@@ -1,0 +1,6 @@
+const helloController = require('../controllers/hello.controller');
+
+module.exports = (fastify, opts, done) => {
+  fastify.get('/', helloController.hello);
+  done();
+};

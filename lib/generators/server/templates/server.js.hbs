@@ -5,6 +5,16 @@ module.exports = function (callback) {
   const port = nconf.get('NODE_PORT');
   {{> (corePartial)}}
 
+  {{#if fastifyFramework}}
+  app
+    .listen(port, (error) => {
+      if (error) {
+        app.log.error(error)
+        process.exit(1)
+      }
+      callback();
+    });
+  {{else}}
   {{#if noFramework}}server{{else}}app{{/if}}
     .listen(port, () => {
       logger.info(`[SERVER] Listening on port ${port}`);
@@ -16,4 +26,5 @@ module.exports = function (callback) {
       }
       callback(error);
     });
+  {{/if}}
 };

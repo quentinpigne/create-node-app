@@ -1,0 +1,20 @@
+{{#if serveStatic}}
+const path = require('path');
+{{/if}}
+const Fastify = require('fastify');
+const fastifyCors = require('fastify-cors');
+{{#if serveStatic}}
+const fastifyStatic = require('fastify-static');
+{{/if}}
+
+const {{#if pinoLogger}}{ logger }{{else}}logger{{/if}} = require('../../lib/logger');
+{{#if monitoring}}
+const register = require('../../lib/prometheus');
+{{/if}}
+{{#if routing}}
+const routes = require('../../app/routes');
+{{/if}}
+{{#if helloEndpointNoRouting}}
+
+const helloController = require('../../app/controllers/hello.controller');
+{{/if}}

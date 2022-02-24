@@ -1,0 +1,39 @@
+const app = Fastify({ logger: logger });
+
+app.register(fastifyCors);
+{{#if routing}}
+
+app.register(routes, { prefix: nconf.get('api:prefix') });
+{{/if}}
+{{#if serveStatic}}
+
+app.register(fastifyStatic, {
+  root: path.resolve(__dirname, '../../public'),
+});
+{{/if}}
+{{#if helloEndpointNoRouting}}
+
+app.get('/hello', helloController.hello);
+{{/if}}
+{{#if monitoring}}
+
+app.get('/metrics', async (request, reply) => {
+  const metrics = await register.metrics();
+  reply.type('text/plain');
+  reply.send(metrics);
+});
+{{/if}}
+
+// Catch 404 and forward to error handler
+app.setNotFoundHandler((request, reply) => {
+  reply.send({ message: 'Not Found', status: 404 });
+});
+
+// Error handler
+app.setErrorHandler((error, request, reply) => {
+  reply.status(error.statusCode || 500);
+  reply.send({
+    message: error.message,
+    error: nconf.get('NODE_ENV') === 'development' ? error.stack : undefined,
+  });
+});

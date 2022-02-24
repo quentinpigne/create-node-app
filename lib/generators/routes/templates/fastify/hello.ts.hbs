@@ -1,0 +1,8 @@
+import { FastifyInstance, RegisterOptions } from 'fastify';
+
+import * as helloController from '../controllers/hello.controller';
+
+export default (fastify: FastifyInstance, opts: RegisterOptions, done: () => void) => {
+  fastify.get('/', helloController.hello);
+  done();
+};

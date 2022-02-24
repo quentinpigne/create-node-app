@@ -1,0 +1,20 @@
+{{#if serveStatic}}
+import path from 'path';
+{{/if}}
+import Fastify, { FastifyError, FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
+import fastifyCors from 'fastify-cors';
+{{#if serveStatic}}
+import fastifyStatic from 'fastify-static';
+{{/if}}
+
+import {{#if pinoLogger}}{ logger }{{else}}logger{{/if}} from '../../lib/logger';
+{{#if monitoring}}
+import register from '../../lib/prometheus';
+{{/if}}
+{{#if routing}}
+import routes from '../../app/routes';
+{{/if}}
+{{#if helloEndpointNoRouting}}
+
+import { hello } from '../../app/controllers/hello.controller';
+{{/if}}

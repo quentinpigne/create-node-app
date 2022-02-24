@@ -1,6 +1,9 @@
 const winston = require('winston');
 
 module.exports = winston.createLogger({
+  {{#if fastifyFramework}}
+  levels: Object.assign({ fatal: 0, warn: 4, trace: 7 }, winston.config.syslog.levels),
+  {{/if}}
   transports: [
     new winston.transports.Console({
       format: winston.format.combine(winston.format.cli(), winston.format.splat()),
