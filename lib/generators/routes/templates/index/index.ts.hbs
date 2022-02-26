@@ -1,0 +1,34 @@
+'use strict';
+{{> (importsPartial)}}
+import { paramCase } from 'change-case';
+{{#if helloEndpoint}}
+
+import hello from './hello';
+{{/if}}
+
+const routes: { [key: string]: {{{routerType}}} } = {
+{{#if helloEndpoint}}
+  hello,
+{{/if}}
+};
+
+export default ({{{params}}}) => {
+  {{#unless fastifyFramework}}
+  const router: Router ={{#if koaFramework}} new{{/if}} Router();
+  {{/unless}}
+  {{#if koaFramework}}
+  router.prefix(nconf.get('api:prefix') as string);
+  {{/if}}
+
+  // Initialize all routes
+  Object.keys(routes).forEach((routeName) => {
+    // Add route to the speficied route name
+    {{#if fastifyFramework}}
+    void fastify.register(routes[routeName], { prefix: '/' + paramCase(routeName) });
+    {{else}}
+    router.use('/' + paramCase(routeName), routes[routeName]());
+    {{/if}}
+  });
+
+  {{ending}}
+};

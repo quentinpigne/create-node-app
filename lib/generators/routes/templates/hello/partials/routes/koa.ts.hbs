@@ -1,0 +1,7 @@
+() => {
+  const router: Router = new Router();
+
+  router.get('/', helloController.hello);
+
+  return router.routes();
+};

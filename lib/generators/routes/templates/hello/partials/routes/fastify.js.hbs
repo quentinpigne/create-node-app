@@ -1,0 +1,4 @@
+(fastify, opts, done) => {
+  fastify.get('/', helloController.hello);
+  done();
+};

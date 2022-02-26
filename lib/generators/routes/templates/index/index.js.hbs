@@ -1,19 +1,26 @@
 'use strict';
-const nconf = require('nconf');
-const Router = require('koa-router');
+{{> (importsPartial)}}
 const changeCase = require('change-case');
 
 const routes = require('require-dir')();
 
-module.exports = () => {
+module.exports = ({{params}}) => {
+  {{#unless fastifyFramework}}
   const router = Router();
+  {{/unless}}
+  {{#if koaFramework}}
   router.prefix(nconf.get('api:prefix'));
+  {{/if}}
 
   // Initialize all routes
   Object.keys(routes).forEach((routeName) => {
     // Add route to the speficied route name
+    {{#if fastifyFramework}}
+    fastify.register(routes[routeName], {  prefix: '/' + changeCase.paramCase(routeName)});
+    {{else}}
     router.use('/' + changeCase.paramCase(routeName), routes[routeName]());
+    {{/if}}
   });
 
-  return router.routes();
+  {{ending}}
 };
