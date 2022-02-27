@@ -1,4 +1,4 @@
-const app: FastifyInstance = Fastify({ logger: logger });
+const app: FastifyInstance = Fastify({ logger: logger as unknown as FastifyLoggerInstance });
 
 void app.register(fastifyCors);
 {{#if routing}}

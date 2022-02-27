@@ -1,8 +1,30 @@
 import winston from 'winston';
+{{#if fastifyFramework}}
+
+const logLevels = {
+  fatal: 0,
+  error: 1,
+  warn: 2,
+  info: 3,
+  debug: 4,
+  trace: 5,
+};
+
+const logColors = {
+  fatal: 'black redBG',
+  error: 'red',
+  warn: 'yellow',
+  info: 'green',
+  debug: 'blue',
+  trace: 'magenta',
+};
+
+winston.addColors(logColors);
+{{/if}}
 
 export default winston.createLogger({
   {{#if fastifyFramework}}
-  levels: Object.assign({ fatal: 0, warn: 4, trace: 7 }, winston.config.syslog.levels),
+  levels: logLevels,
   {{/if}}
   transports: [
     new winston.transports.Console({
