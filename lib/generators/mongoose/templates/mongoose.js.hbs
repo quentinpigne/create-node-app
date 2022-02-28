@@ -1,0 +1,19 @@
+const nconf = require('nconf');
+const mongoose = require('mongoose');
+
+const {{#if pinoLogger}}{ logger }{{else}}logger{{/if}} = require('../../lib/logger');
+
+module.exports = function (callback) {
+  const config = nconf.get('mongo');
+  const mongooseConfig = {};
+
+  mongoose.connect(`mongodb://${config.host}:${config.port}/${config.database}`, mongooseConfig, error => {
+    if (error) {
+      logger.error('[MONGO] MongoDB initialization failed');
+      callback(true);
+    } else {
+      logger.info('[MONGO] MongoDB successfully initialized');
+      callback();
+    }
+  });
+}

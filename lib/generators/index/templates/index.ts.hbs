@@ -24,7 +24,7 @@ logger.info('[APP] Starting server initialization');
 // Initialize Modules
 async.series(
   [{{#each initializers}}
-    (callback: (error?: Error | null) => void) => initServer(callback),
+    (callback: (error?: Error | null) => void) => init{{capitalize this}}(callback),
   {{/each}}],
   (error?: Error | null) => {
     if (error) {
