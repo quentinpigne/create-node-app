@@ -3,27 +3,20 @@ import mongoose from 'mongoose';
 
 import {{#if pinoLogger}}{ logger }{{else}}logger{{/if}} from '../../lib/logger';
 
-type MongoConfig = {
-  host: string;
-  port: number;
-  database: string;
-};
-
 export default function (callback: (error?: Error | null) => void) {
-  const config: MongoConfig = nconf.get("mongo") as MongoConfig;
-  const mongooseConfig: mongoose.ConnectOptions = {};
+  const mongooseOptions: mongoose.ConnectOptions = {
+    user: nconf.get('mongo:user') as string,
+    pass: nconf.get('mongo:pass') as string,
+    dbName: nconf.get('mongo:database') as string,
+  };
 
-  mongoose.connect(
-    `mongodb://${config.host}:${config.port}/${config.database}`,
-    mongooseConfig,
-    (error: mongoose.CallbackError) => {
-      if (error) {
-        logger.error('[MONGO] MongoDB initialization failed');
-        callback(error);
-      } else {
-        logger.info('[MONGO] MongoDB successfully initialized');
-        callback();
-      }
+  mongoose.connect(nconf.get('mongo:url') as string, mongooseOptions, (error: mongoose.CallbackError) => {
+    if (error) {
+      logger.error('[MONGO] MongoDB initialization failed');
+      callback(error);
+    } else {
+      logger.info('[MONGO] MongoDB successfully initialized');
+      callback();
     }
-  );
+  });
 }
