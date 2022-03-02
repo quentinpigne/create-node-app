@@ -1,0 +1,25 @@
+import { Sequelize } from 'sequelize';
+
+import {{#if pinoLogger}}{ logger }{{else}}logger{{/if}} from '../../lib/logger';
+
+export default async function (callback: (error?: Error | null) => void) {
+  const sequelize: Sequelize = new Sequelize({
+    dialect: '{{dialect}}',
+    logging: (msg: string) => logger.info(`[DATABASE] ${msg}`),
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    }
+  });
+
+  try {
+    await sequelize.authenticate();
+    logger.info('[DATABASE] Database connection successfully initialized');
+    callback();
+  } catch (error) {
+    logger.error('[DATABASE] Database connection initialization failed');
+    callback(error as Error);
+  }
+}
