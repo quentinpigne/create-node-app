@@ -1,0 +1,19 @@
+const typeorm = require('typeorm');
+
+const {{#if pinoLogger}}{ logger }{{else}}logger{{/if}} = require('../../lib/logger');
+
+module.exports = async function (callback) {
+  typeorm
+    .createConnection({
+      type: '{{dialect}}',
+      logging: 'all',
+    })
+    .then(() => {
+      logger.info('[DATABASE] Database connection successfully initialized');
+      callback();
+    })
+    .catch(() => {
+      logger.error('[DATABASE] Database connection initialization failed');
+      callback(true);
+    });
+}

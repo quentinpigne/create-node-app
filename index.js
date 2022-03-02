@@ -51,7 +51,9 @@ async function init() {
   installDependencies(context.config);
 
   if (context.config.language === 'typescript') {
-    spawn.sync('npx', ['tsc', '--init'], { stdio: 'inherit' });
+    const args = ['tsc', '--init'];
+    if (context.config.database_tool === 'typeorm') args.push('--experimentalDecorators', '--emitDecoratorMetadata');
+    spawn.sync('npx', args, { stdio: 'inherit' });
   }
 
   if (context.config.eslint) writeEslintRc(context);

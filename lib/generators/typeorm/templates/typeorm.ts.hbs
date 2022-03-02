@@ -1,0 +1,19 @@
+import "reflect-metadata";
+import { createConnection } from "typeorm";
+
+import {{#if pinoLogger}}{ logger }{{else}}logger{{/if}} from '../../lib/logger';
+
+export default async function (callback: (error?: Error | null) => void) {
+  createConnection({
+    type: '{{dialect}}',
+    logging: 'all',
+  })
+    .then(() => {
+      logger.info('[DATABASE] Database connection successfully initialized');
+      callback();
+    })
+    .catch((error: Error) => {
+      logger.error('[DATABASE] Database connection initialization failed');
+      callback(error);
+    });
+}
