@@ -1,7 +1,7 @@
 () => {
   const router: Router = new Router();
 
-  router.get('/', helloController.hello);
+  router.get('/', (ctx: ParameterizedContext) => (ctx.response.body = helloController.hello()));
 
   return router.routes();
 };

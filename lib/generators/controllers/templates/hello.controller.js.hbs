@@ -1,4 +1,6 @@
-const hello = {{> (endpointPartial)}}
+const hello = () => {
+  return { message: 'Hello world!' };
+};
 
 module.exports = {
   hello,

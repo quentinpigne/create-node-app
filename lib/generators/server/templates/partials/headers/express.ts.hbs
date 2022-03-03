@@ -11,7 +11,7 @@ import {{#if pinoLogger}}{ logger, httpLogger }{{else}}logger{{/if}} from '../..
 import register from '../../lib/prometheus';
 {{/if}}
 {{#if routing}}
-import routes from '../../app/routes';
+import routes from '../routes';
 {{/if}}
 
 interface Error {

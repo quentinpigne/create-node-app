@@ -11,5 +11,5 @@ const {{#if pinoLogger}}{ logger, httpLogger }{{else}}logger{{/if}} = require('.
 const register = require('../../lib/prometheus');
 {{/if}}
 {{#if routing}}
-const routes = require('../../app/routes');
+const routes = require('../routes');
 {{/if}}

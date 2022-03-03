@@ -1,4 +1,4 @@
 (fastify: FastifyInstance, opts: RegisterOptions, done: () => void) => {
-  fastify.get('/', helloController.hello);
+  fastify.get('/', (request: FastifyRequest, reply: FastifyReply) => (void reply.send(helloController.hello())));
   done();
 };

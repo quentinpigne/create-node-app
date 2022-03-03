@@ -1,7 +1,7 @@
 () => {
   const router: Router = Router();
 
-  router.get('/', helloController.hello);
+  router.get('/', (req: Request, res: Response) => res.json(helloController.hello()));
 
   return router;
 };
