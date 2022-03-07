@@ -1,11 +1,11 @@
 import http, { IncomingMessage, Server, ServerResponse } from 'http';
 import morgan from 'morgan';
 
-import {{#if pinoLogger}}{ logger, httpLogger }{{else}}logger{{/if}} from '../../lib/logger';
+import {{#if pinoLogger}}{ logger, httpLogger }{{else}}logger{{/if}} from '@lib/logger';
 {{#if monitoring}}
-import register from '../../lib/prometheus';
+import register from '@lib/prometheus';
 {{/if}}
 {{#if helloEndpoint}}
 
-import { hello } from '../../app/controllers/hello.controller';
+import { hello } from '@controllers/hello.controller';
 {{/if}}

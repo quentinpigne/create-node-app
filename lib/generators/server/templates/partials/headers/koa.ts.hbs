@@ -11,16 +11,16 @@ import koaPino from 'koa-pino-logger';
 import serve from 'koa-static';
 {{/if}}
 
-import {{#if pinoLogger}}{ logger }{{else}}logger{{/if}} from '../../lib/logger';
+import {{#if pinoLogger}}{ logger }{{else}}logger{{/if}} from '@lib/logger';
 {{#if monitoring}}
-import register from '../../lib/prometheus';
+import register from '@lib/prometheus';
 {{/if}}
 {{#if routing}}
 
-import routes from '../routes';
+import routes from '@config/routes';
 {{else}}
 {{#if helloEndpoint}}
 
-import { hello } from '../../app/controllers/hello.controller';
+import { hello } from '@controllers/hello.controller';
 {{/if}}
 {{/if}}

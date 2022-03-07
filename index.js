@@ -15,6 +15,7 @@ const config = require('./lib/config');
 const writeEslintRc = require('./lib/eslintrc');
 const packageJson = require('./lib/package-json');
 const installDependencies = require('./lib/install');
+const writeTsConfigFile = require('./lib/tsconfig');
 const writeEnvironmentFiles = require('./lib/environment');
 
 const nameAndOptions = () => {
@@ -51,9 +52,7 @@ async function init() {
   installDependencies(context.config);
 
   if (context.config.language === 'typescript') {
-    const args = ['tsc', '--init'];
-    if (context.config.database_tool === 'typeorm') args.push('--experimentalDecorators', '--emitDecoratorMetadata');
-    spawn.sync('npx', args, { stdio: 'inherit' });
+    writeTsConfigFile(context);
   }
 
   if (context.config.eslint) writeEslintRc(context);
