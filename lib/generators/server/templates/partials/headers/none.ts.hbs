@@ -7,5 +7,6 @@ import register from '@lib/prometheus';
 {{/if}}
 {{#if helloEndpoint}}
 
-import { hello } from '@controllers/hello.controller';
+import { HelloController } from '@controllers/hello.controller';
+const helloController: HelloController = new HelloController();
 {{/if}}

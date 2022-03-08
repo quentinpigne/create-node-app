@@ -1,3 +1,5 @@
-export const hello = () => {
-  return { message: 'Hello world!' };
-};
+export class HelloController {
+  hello(): { message: string } {
+    return { message: 'Hello world!' };
+  }
+}

@@ -9,7 +9,7 @@ server.on('request', (request: IncomingMessage, response: ServerResponse) => {
     switch (request.url) {
       {{#if helloEndpoint}}
       case '/hello':
-        response.end(JSON.stringify(hello(), null, 2));
+        response.end(JSON.stringify(helloController.hello(), null, 2));
         break;
       {{/if}}
       {{#if monitoring}}

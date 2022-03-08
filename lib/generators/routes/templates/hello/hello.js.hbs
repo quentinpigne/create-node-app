@@ -1,5 +1,7 @@
 {{> (importsPartial)}}
 
-const helloController = require('../../app/controllers/hello.controller');
+const HelloController = require('../../app/controllers/hello.controller');
+
+const helloController = new HelloController();
 
 module.exports = {{> (routesPartial)}}

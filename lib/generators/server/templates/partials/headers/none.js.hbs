@@ -7,5 +7,6 @@ const register = require('../../lib/prometheus');
 {{/if}}
 {{#if helloEndpoint}}
 
-const helloController = require('../../app/controllers/hello.controller');
+const HelloController = require('../../app/controllers/hello.controller');
+const helloController = new HelloController();
 {{/if}}

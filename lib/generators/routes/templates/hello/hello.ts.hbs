@@ -1,5 +1,7 @@
 {{> (importsPartial)}}
 
-import * as helloController from '@controllers/hello.controller';
+import { HelloController } from '@controllers/hello.controller';
+
+const helloController: HelloController = new HelloController();
 
 export default {{> (routesPartial)}}
