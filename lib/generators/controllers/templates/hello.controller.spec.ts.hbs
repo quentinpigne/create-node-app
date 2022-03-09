@@ -1,0 +1,16 @@
+import { HelloController } from './hello.controller';
+
+describe('HelloController', () => {
+  let helloController: HelloController;
+
+  beforeAll(() => {
+    helloController = new HelloController();
+  });
+
+  describe('helloEndpoint', () => {
+    it('should return hello message object', () => {
+      const result = helloController.hello();
+      expect(result).toEqual({ message: 'Hello world!' });
+    });
+  });
+});

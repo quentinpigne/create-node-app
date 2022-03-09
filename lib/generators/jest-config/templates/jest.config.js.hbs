@@ -1,0 +1,8 @@
+module.exports = {
+  {{#if typescript}}
+  preset: 'ts-jest',
+  {{/if}}
+  clearMocks: true,
+  coverageProvider: 'v8',
+  testEnvironment: 'node',
+};
