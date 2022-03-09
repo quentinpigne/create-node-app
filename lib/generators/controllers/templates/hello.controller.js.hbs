@@ -1,7 +1,11 @@
+const { Container } = require('typedi');
+
 class HelloController {
   hello() {
     return { message: 'Hello world!' };
   }
 }
 
-module.exports = HelloController;
+Container.set('hello.controller', new HelloController());
+
+module.exports = Container.get('hello.controller');

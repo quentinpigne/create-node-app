@@ -1,7 +1,8 @@
+import Container from 'typedi';
 {{> (importsPartial)}}
 
 import { HelloController } from '@controllers/hello.controller';
 
-const helloController: HelloController = new HelloController();
+const helloController: HelloController = Container.get(HelloController);
 
 export default {{> (routesPartial)}}
