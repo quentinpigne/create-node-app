@@ -1,4 +1,4 @@
-const DatabaseDriver = {
+export const DatabaseDriver: Record<string, string[]> = {
   postgres: ['pg', 'pg-hstore'],
   mysql: ['mysql2'],
   mariadb: ['mariadb'],
@@ -6,15 +6,10 @@ const DatabaseDriver = {
   mssql: ['tedious'],
 };
 
-const DatabaseDialect = {
+export const DatabaseDialect: Record<string, string> = {
   postgres: 'postgres',
   mysql: 'mysql',
   mariadb: 'mysql',
   sqlite: 'sqlite',
   mssql: 'mssql',
-};
-
-module.exports = {
-  DatabaseDriver,
-  DatabaseDialect,
 };

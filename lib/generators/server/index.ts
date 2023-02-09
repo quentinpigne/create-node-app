@@ -1,17 +1,31 @@
-'use strict';
-const path = require('path');
+import path from 'path';
 
-const { applyTemplate, registerPartials } = require('../handlebars/handlebars');
+import { Context } from '../../../types';
+import { applyTemplate, registerPartials } from '../handlebars/handlebars';
+
+type ServerContext = {
+  headersPartial: () => string;
+  corePartial: () => string;
+  noFramework: () => boolean;
+  expressFramework: () => boolean;
+  fastifyFramework: () => boolean;
+  routing: () => boolean;
+  serveStatic: () => boolean;
+  helloEndpoint: () => boolean;
+  helloEndpointNoRouting: () => boolean;
+  pinoLogger: () => boolean;
+  monitoring: () => boolean;
+};
 
 registerPartials(__dirname);
 
-module.exports = (context) => {
+export const generate = (context: Context): void => {
   if (!context.config.server_side) return;
 
-  const fileExtension = context.config.language === 'javascript' ? 'js' : 'ts';
-  const fileName = `server.${fileExtension}`;
-  const outputPath = path.join(context.projectPath, 'config', 'initializers');
-  const templateContext = {
+  const fileExtension: string = context.config.language === 'javascript' ? 'js' : 'ts';
+  const fileName: string = `server.${fileExtension}`;
+  const outputPath: string = path.join(context.projectPath, 'config', 'initializers');
+  const templateContext: ServerContext = {
     headersPartial: () => `headers-${context.config.framework}-${fileExtension}`,
     corePartial: () => `core-${context.config.framework}-${fileExtension}`,
     noFramework: () => context.config.framework === 'none',

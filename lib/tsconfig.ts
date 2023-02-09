@@ -1,10 +1,28 @@
-'use strict';
-const fs = require('fs-extra');
-const os = require('os');
-const path = require('path');
+import os from 'os';
+import path from 'path';
+import fs from 'fs-extra';
 
-const getTsConfigFile = (context) => {
-  const tsConfig = {
+import { Context } from '../types';
+
+interface TsConfig {
+  compilerOptions: {
+    target?: string;
+    module?: string;
+    rootDir?: string;
+    outDir?: string;
+    baseUrl?: string;
+    paths?: { [key: string]: string[] };
+    strict?: boolean;
+    skipLibCheck?: boolean;
+    experimentalDecorators?: boolean;
+    emitDecoratorMetadata?: boolean;
+    esModuleInterop?: boolean;
+    forceConsistentCasingInFileNames?: boolean;
+  };
+}
+
+const getTsConfigFile = (context: Context): TsConfig => {
+  const tsConfig: TsConfig = {
     compilerOptions: {},
   };
   tsConfig.compilerOptions.target = 'es2017';
@@ -32,7 +50,7 @@ const getTsConfigFile = (context) => {
   return tsConfig;
 };
 
-module.exports = (context) => {
+export default (context: Context): void => {
   fs.writeFileSync(
     path.join(context.projectPath, 'tsconfig.json'),
     JSON.stringify(getTsConfigFile(context), null, 2) + os.EOL,

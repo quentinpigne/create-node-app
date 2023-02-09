@@ -1,5 +1,20 @@
-'use strict';
-const getStartCommand = (config) => {
+import { Context } from '../types';
+import { Config } from './config/types';
+
+interface PackageJson {
+  name: string;
+  version: string;
+  description: string;
+  main: string;
+  scripts: {
+    [key: string]: string;
+  };
+  nodemonConfig?: {
+    exec: string;
+  };
+}
+
+const getStartCommand = (config: Config): string => {
   switch (config.file_watcher) {
     case 'nodemon':
       return 'nodemon';
@@ -14,12 +29,12 @@ const getStartCommand = (config) => {
   }
 };
 
-const getMainFile = (language) => (language === 'javascript' ? 'index.js' : 'index.ts');
+const getMainFile = (language: string): string => (language === 'javascript' ? 'index.js' : 'index.ts');
 
-const getLanguageExtension = (language) => (language === 'javascript' ? 'js' : 'ts');
+const getLanguageExtension = (language: string): string => (language === 'javascript' ? 'js' : 'ts');
 
-module.exports = (context) => {
-  const packageJson = {
+export default (context: Context): PackageJson => {
+  const packageJson: PackageJson = {
     name: context.projectName,
     version: '0.0.1-SNAPSHOT',
     description: 'A project made from node starter',

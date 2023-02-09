@@ -1,5 +1,9 @@
-'use strict';
-module.exports = (fileConfig) =>
+import { QuestionCollection } from 'inquirer';
+
+import { Config } from './types';
+import { DatabaseDriver } from '../utils/database';
+
+export default (fileConfig: Config): QuestionCollection<Config> =>
   [
     !fileConfig?.package_manager
       ? {
@@ -22,7 +26,7 @@ module.exports = (fileConfig) =>
           type: 'list',
           name: 'file_watcher',
           message: 'Which file watcher do you want to use?',
-          choices: (prev) =>
+          choices: (prev: Config) =>
             ['none', 'nodemon', prev.language === 'typescript' ? 'ts-node-dev' : null].filter((val) => !!val),
         }
       : null,
@@ -34,7 +38,7 @@ module.exports = (fileConfig) =>
           choices: ['winston', 'pino'],
         }
       : null,
-    !fileConfig?.eslint
+    fileConfig?.eslint === undefined
       ? {
           type: 'confirm',
           name: 'eslint',
@@ -42,7 +46,7 @@ module.exports = (fileConfig) =>
           default: true,
         }
       : null,
-    !fileConfig?.prettier
+    fileConfig?.prettier === undefined
       ? {
           type: 'confirm',
           name: 'prettier',
@@ -68,14 +72,14 @@ module.exports = (fileConfig) =>
       : null,
     !fileConfig?.database
       ? {
-          when: (prev) => ['sequelize', 'typeorm'].includes(prev.database_tool),
+          when: (prev: Config) => ['sequelize', 'typeorm'].includes(prev.database_tool),
           type: 'list',
           name: 'database',
           message: 'Which type of database do you want to connect to?',
-          choices: Object.keys(require('../utils/database').DatabaseDriver),
+          choices: Object.keys(DatabaseDriver),
         }
       : null,
-    !fileConfig?.server_side
+    fileConfig?.server_side === undefined
       ? {
           type: 'confirm',
           name: 'server_side',
@@ -85,43 +89,43 @@ module.exports = (fileConfig) =>
       : null,
     !fileConfig?.framework
       ? {
-          when: (prev) => prev.server_side,
+          when: (prev: Config) => prev.server_side,
           type: 'list',
           name: 'framework',
           message: 'Which framework do you want to use?',
           choices: ['none', 'koa', 'express', 'fastify'],
         }
       : null,
-    !fileConfig?.routing
+    fileConfig?.routing === undefined
       ? {
-          when: (prev) => prev.server_side && prev.framework !== 'none',
+          when: (prev: Config) => prev.server_side && prev.framework !== 'none',
           type: 'confirm',
           name: 'routing',
           message: 'Do you want to add routing?',
           default: true,
         }
       : null,
-    !fileConfig?.serve_static
+    fileConfig?.serve_static === undefined
       ? {
-          when: (prev) => prev.server_side && prev.framework !== 'none',
+          when: (prev: Config) => prev.server_side && prev.framework !== 'none',
           type: 'confirm',
           name: 'serve_static',
           message: "Do you want to serve static files from 'public' folder?",
           default: true,
         }
       : null,
-    !fileConfig?.hello_endpoint
+    fileConfig?.hello_endpoint === undefined
       ? {
-          when: (prev) => prev.server_side,
+          when: (prev: Config) => prev.server_side,
           type: 'confirm',
           name: 'hello_endpoint',
           message: 'Do you want to initialize the project with a hello world endpoint?',
           default: true,
         }
       : null,
-    !fileConfig?.monitoring
+    fileConfig?.monitoring === undefined
       ? {
-          when: (prev) => prev.server_side,
+          when: (prev: Config) => prev.server_side,
           type: 'confirm',
           name: 'monitoring',
           message: 'Do you want to add monitoring with Prometheus?',

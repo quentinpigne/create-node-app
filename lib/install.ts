@@ -1,19 +1,21 @@
-'use strict';
-const spawn = require('cross-spawn');
+import spawn from 'cross-spawn';
 
-const { DatabaseDriver } = require('./utils/database');
+import { Config } from './config/types';
+import { DatabaseDriver } from './utils/database';
 
-const installCommand = (config, isDev) => {
+const installCommand = (config: Config, isDev: boolean): string[] => {
   switch (config.package_manager) {
     case 'npm':
       return ['install', isDev ? '--save-dev' : '--save', '--save-exact', '--loglevel', 'error'];
     case 'yarn':
     case 'pnpm':
-      return ['add', isDev ? '-D' : null, '-E'].filter((val) => !!val);
+      return ['add', isDev ? '-D' : null, '-E'].filter((val) => !!val) as string[];
+    default:
+      return [];
   }
 };
 
-const prodDependencies = (config) => {
+const prodDependencies = (config: Config): string[] => {
   const prodDependencies = ['async', 'dotenv', 'nconf', config.logger];
   if (config.language === 'typescript') {
     if (config.hello_endpoint || config.database_tool === 'typeorm') prodDependencies.push('reflect-metadata');
@@ -41,7 +43,7 @@ const prodDependencies = (config) => {
   return prodDependencies;
 };
 
-const devDependencies = (config) => {
+const devDependencies = (config: Config): string[] => {
   const devDependencies = [];
   if (config.file_watcher !== 'none') devDependencies.push(config.file_watcher);
   if (config.eslint) {
@@ -69,12 +71,10 @@ const devDependencies = (config) => {
   return devDependencies;
 };
 
-const installDependencies = (config) => {
+export const installDependencies = (config: Config): void => {
   const command = config.package_manager;
   spawn.sync(command, [...installCommand(config, false), ...prodDependencies(config)], { stdio: 'inherit' });
   if (devDependencies(config).length > 0) {
     spawn.sync(command, [...installCommand(config, true), ...devDependencies(config)], { stdio: 'inherit' });
   }
 };
-
-module.exports = installDependencies;

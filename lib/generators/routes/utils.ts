@@ -1,5 +1,6 @@
-'use strict';
-const getRouterType = (framework) => {
+import { Config, Framework } from '../../config/types';
+
+export const getRouterType = (framework: Framework): string | undefined => {
   switch (framework) {
     case 'koa':
       return '() => IMiddleware';
@@ -10,14 +11,14 @@ const getRouterType = (framework) => {
   }
 };
 
-const getParams = (config) => {
+export const getParams = (config: Config): string | undefined => {
   if (config.framework !== 'fastify') return;
   return config.language === 'javascript'
     ? 'fastify, opts, done'
     : 'fastify: FastifyInstance, opts: RegisterOptions, done: () => void';
 };
 
-const getEnding = (framework) => {
+export const getEnding = (framework: Framework): string | undefined => {
   switch (framework) {
     case 'koa':
       return 'return router.routes();';
@@ -26,10 +27,4 @@ const getEnding = (framework) => {
     case 'fastify':
       return 'done();';
   }
-};
-
-module.exports = {
-  getRouterType,
-  getParams,
-  getEnding,
 };

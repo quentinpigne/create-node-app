@@ -1,9 +1,26 @@
-'use strict';
-const fs = require('fs-extra');
-const os = require('os');
-const path = require('path');
+import os from 'os';
+import path from 'path';
+import fs from 'fs-extra';
 
-const getJavascriptConfig = () => ({
+import { Context } from '../types';
+
+interface EsLintRc {
+  root: boolean;
+  env?: {
+    node: boolean;
+  };
+  parser?: string;
+  parserOptions: {
+    ecmaVersion?: string;
+    tsconfigRootDir?: string;
+    project?: string[];
+  };
+  plugins?: string[];
+  extends: string[];
+  rules: {};
+}
+
+const getJavascriptConfig = (): Partial<EsLintRc> => ({
   env: {
     node: true,
   },
@@ -13,7 +30,7 @@ const getJavascriptConfig = () => ({
   },
 });
 
-const getTypescriptConfig = (context) => ({
+const getTypescriptConfig = (context: Context): Partial<EsLintRc> => ({
   parser: '@typescript-eslint/parser',
   parserOptions: { tsconfigRootDir: context.projectPath, project: ['./tsconfig.json'] },
   plugins: ['@typescript-eslint'],
@@ -24,7 +41,7 @@ const getTypescriptConfig = (context) => ({
   ],
 });
 
-const getEslintConfigFile = (context) => {
+const getEslintConfigFile = (context: Context): Partial<EsLintRc> => {
   const languageConfig =
     context.config.language === 'javascript' ? getJavascriptConfig() : getTypescriptConfig(context);
   const eslintrc = {
@@ -32,11 +49,11 @@ const getEslintConfigFile = (context) => {
     ...languageConfig,
     rules: {},
   };
-  if (context.config.prettier) eslintrc.extends.push('plugin:prettier/recommended');
+  if (context.config.prettier) eslintrc.extends?.push('plugin:prettier/recommended');
   return eslintrc;
 };
 
-module.exports = (context) => {
+export default (context: Context): void => {
   fs.writeFileSync(
     path.join(context.projectPath, '.eslintrc.json'),
     JSON.stringify(getEslintConfigFile(context), null, 2) + os.EOL,
