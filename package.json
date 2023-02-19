@@ -1,6 +1,7 @@
 {
   "name": "@quentinpigne/create-node-app",
   "version": "0.0.1-SNAPSHOT",
+  "type": "module",
   "keywords": [
     "node",
     "starter"
@@ -16,7 +17,7 @@
     "node": ">=14"
   },
   "scripts": {
-    "start": "ts-node index.ts",
+    "start": "ts-node --esm --experimental-specifier-resolution=node index.ts",
     "build": "pnpm run clean:dist && tsc -p .",
     "clean:dist": "rm -rf ./dist",
     "clean:all": "rm -rf ./dist ./node_modules ./pnpm-lock.yaml",
@@ -28,16 +29,16 @@
     "cross-spawn": "7.0.3",
     "fs-extra": "11.1.0",
     "handlebars": "4.7.7",
-    "inquirer": "8.2.5",
+    "inquirer": "9.1.4",
     "tslib": "^2.5.0"
   },
   "devDependencies": {
     "@types/cross-spawn": "6.0.2",
     "@types/fs-extra": "11.0.1",
     "@types/inquirer": "9.0.3",
-    "@types/node": "18.13.0",
+    "@types/node": "18.14.0",
     "prettier": "2.8.4",
-    "ts-node": "^10.9.1",
+    "ts-node": "10.9.1",
     "typescript": "4.9.5"
   }
 }
