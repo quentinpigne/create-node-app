@@ -1,6 +1,7 @@
 import path from 'path';
 
 import { Context } from '../../../types';
+import { getGeneratorPath } from '../../utils/file';
 import { applyTemplate, registerPartials } from '../handlebars/handlebars';
 
 type ServerContext = {
@@ -17,10 +18,11 @@ type ServerContext = {
   monitoring: () => boolean;
 };
 
-registerPartials(__dirname);
-
 export const generate = (context: Context): void => {
   if (!context.config.server_side) return;
+
+  const generatorPath: string = getGeneratorPath(context.cliPath, 'server');
+  registerPartials(generatorPath);
 
   const fileExtension: string = context.config.language === 'javascript' ? 'js' : 'ts';
   const fileName: string = `server.${fileExtension}`;
@@ -39,5 +41,5 @@ export const generate = (context: Context): void => {
     monitoring: () => context.config.monitoring,
   };
 
-  applyTemplate(templateContext, __dirname, fileName, outputPath);
+  applyTemplate(templateContext, generatorPath, fileName, outputPath);
 };

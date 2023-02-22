@@ -1,6 +1,7 @@
 import path from 'path';
 
 import { Context } from '../../../types';
+import { getGeneratorPath } from '../../utils/file';
 import { DatabaseDialect } from '../../utils/database';
 import { applyTemplate } from '../handlebars/handlebars';
 
@@ -20,5 +21,5 @@ export const generate = (context: Context): void => {
     dialect: DatabaseDialect[context.config.database],
   };
 
-  applyTemplate(templateContext, __dirname, fileName, outputPath);
+  applyTemplate(templateContext, getGeneratorPath(context.cliPath, 'sequelize'), fileName, outputPath);
 };

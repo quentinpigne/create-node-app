@@ -1,6 +1,7 @@
 import path from 'path';
 
 import { Context } from '../../../types';
+import { getGeneratorPath } from '../../utils/file';
 import { applyTemplate } from '../handlebars/handlebars';
 
 export const generate = (context: Context): void => {
@@ -10,5 +11,5 @@ export const generate = (context: Context): void => {
   const outputPath: string = path.join(context.projectPath, 'lib');
   const templateContext: {} = {};
 
-  applyTemplate(templateContext, __dirname, fileName, outputPath);
+  applyTemplate(templateContext, getGeneratorPath(context.cliPath, 'prometheus'), fileName, outputPath);
 };

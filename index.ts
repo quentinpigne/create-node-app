@@ -1,4 +1,5 @@
 import os from 'os';
+import url from 'url';
 import path from 'path';
 import fs from 'fs-extra';
 import spawn from 'cross-spawn';
@@ -35,12 +36,18 @@ async function init(): Promise<void> {
   const projectPath: string = path.resolve(projectName);
   const starterConfig: Config = await getConfig(options.config);
 
-  const context: Context = { cliVersion: packageJsonCli.version, projectName, projectPath, config: starterConfig };
+  const context: Context = {
+    cliVersion: packageJsonCli.version,
+    cliPath: path.dirname(url.fileURLToPath(import.meta.url)),
+    projectName,
+    projectPath,
+    config: starterConfig,
+  };
 
   fs.ensureDirSync(context.projectPath);
   process.chdir(projectPath);
 
-  fs.copySync(path.join(__dirname, '/lib/static'), projectPath, {
+  fs.copySync(path.join(context.cliPath, '/lib/static'), projectPath, {
     filter: (src: string) => {
       if (!context.config.prettier && src.match('.prettierrc')) return false;
       return true;
@@ -62,7 +69,7 @@ async function init(): Promise<void> {
     fs.ensureDirSync(path.join(context.projectPath, 'public'));
   }
 
-  const generatorsPath: string = path.join(__dirname, 'lib', 'generators');
+  const generatorsPath: string = path.join(context.cliPath, 'lib', 'generators');
   getAllFiles(generatorsPath, undefined, undefined, {
     filter: (fullPath: string) => !!fullPath.match('templates|handlebars|utils'),
   }).forEach((generatorFile: File) => {

@@ -1,4 +1,5 @@
 import { Context } from '../../../types';
+import { getGeneratorPath } from '../../utils/file';
 import { applyTemplate } from '../handlebars/handlebars';
 
 type ReadmeContext = {
@@ -13,5 +14,11 @@ export const generate = (context: Context): void => {
     cli_version: context.cliVersion,
   };
 
-  applyTemplate(templateContext, __dirname, fileName, context.projectPath, 'README.md');
+  applyTemplate(
+    templateContext,
+    getGeneratorPath(context.cliPath, 'readme'),
+    fileName,
+    context.projectPath,
+    'README.md',
+  );
 };

@@ -1,4 +1,5 @@
 import { Context } from '../../../types';
+import { getGeneratorPath } from '../../utils/file';
 import { applyTemplate } from '../handlebars/handlebars';
 
 type IndexContext = {
@@ -18,5 +19,5 @@ export const generate = (context: Context): void => {
     pinoLogger: () => context.config.logger === 'pino',
   };
 
-  applyTemplate(templateContext, __dirname, fileName, context.projectPath);
+  applyTemplate(templateContext, getGeneratorPath(context.cliPath, 'index'), fileName, context.projectPath);
 };

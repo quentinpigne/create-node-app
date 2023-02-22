@@ -29,3 +29,7 @@ export function getAllFiles(dirPath: string, basePath?: string, arrayOfFiles?: F
 
   return resultArrayOfFiles;
 }
+
+export function getGeneratorPath(cliPath: string, generatorName: string): string {
+  return path.join(cliPath, 'lib', 'generators', generatorName);
+}

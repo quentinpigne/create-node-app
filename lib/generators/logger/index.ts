@@ -1,6 +1,7 @@
 import path from 'path';
 
 import { Context } from '../../../types';
+import { getGeneratorPath } from '../../utils/file';
 import { applyTemplate } from '../handlebars/handlebars';
 
 type LoggerContext = {
@@ -14,5 +15,7 @@ export const generate = (context: Context): void => {
     fastifyFramework: () => context.config.framework === 'fastify',
   };
 
-  applyTemplate(templateContext, __dirname, fileName, outputPath, undefined, [context.config.logger]);
+  applyTemplate(templateContext, getGeneratorPath(context.cliPath, 'logger'), fileName, outputPath, undefined, [
+    context.config.logger,
+  ]);
 };

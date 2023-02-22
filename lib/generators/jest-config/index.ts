@@ -1,4 +1,5 @@
 import { Context } from '../../../types';
+import { getGeneratorPath } from '../../utils/file';
 import { applyTemplate } from '../handlebars/handlebars';
 
 type JestConfigContext = {
@@ -13,5 +14,5 @@ export const generate = (context: Context): void => {
     typescript: () => context.config.language === 'typescript',
   };
 
-  applyTemplate(templateContext, __dirname, fileName, context.projectPath);
+  applyTemplate(templateContext, getGeneratorPath(context.cliPath, 'jest-config'), fileName, context.projectPath);
 };

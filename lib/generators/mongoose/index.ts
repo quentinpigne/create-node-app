@@ -1,6 +1,7 @@
 import path from 'path';
 
 import { Context } from '../../../types';
+import { getGeneratorPath } from '../../utils/file';
 import { applyTemplate } from '../handlebars/handlebars';
 
 type MongooseContext = {
@@ -17,5 +18,5 @@ export const generate = (context: Context): void => {
     pinoLogger: () => context.config.logger === 'pino',
   };
 
-  applyTemplate(templateContext, __dirname, fileName, outputPath);
+  applyTemplate(templateContext, getGeneratorPath(context.cliPath, 'mongoose'), fileName, outputPath);
 };
