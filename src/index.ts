@@ -13,7 +13,7 @@ import packageJson from './package-json';
 import { installDependencies } from './install';
 import writeTsConfigFile from './tsconfig';
 import writeEnvironmentFiles from './environment';
-import { File, getAllFiles } from './utils/file';
+import * as generators from './generators';
 
 import { CommanderOptions, Context, Generator } from './types';
 
@@ -69,14 +69,7 @@ async function init(): Promise<void> {
     fs.ensureDirSync(path.join(context.projectPath, 'public'));
   }
 
-  const generatorsPath: string = path.join(context.cliPath, 'generators');
-  getAllFiles(generatorsPath, undefined, undefined, {
-    filter: (fullPath: string) => !!fullPath.match('templates|handlebars|utils'),
-  }).forEach((generatorFile: File) => {
-    import(path.join(generatorsPath, ...generatorFile.path, generatorFile.fileName)).then((generator: Generator) =>
-      generator.generate(context),
-    );
-  });
+  Object.values(generators).forEach((generator: Generator) => generator.generate(context));
 
   if (context.config.prettier) {
     spawn.sync('npx', ['prettier', `**/*.${context.config.language === 'javascript' ? 'js' : 'ts'}`, '--write'], {
