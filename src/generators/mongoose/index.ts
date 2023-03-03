@@ -2,7 +2,7 @@ import path from 'path';
 
 import { Context } from '../../types';
 import { getGeneratorPath } from '../../utils/file';
-import { applyTemplate } from '../handlebars/handlebars';
+import { applyTemplate } from '../../handlebars/handlebars';
 
 type MongooseContext = {
   pinoLogger: () => boolean;

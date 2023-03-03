@@ -3,7 +3,7 @@ import path from 'path';
 import { Context } from '../../types';
 import { getGeneratorPath } from '../../utils/file';
 import { DatabaseDialect } from '../../utils/database';
-import { applyTemplate } from '../handlebars/handlebars';
+import { applyTemplate } from '../../handlebars/handlebars';
 
 type SequelizeContext = {
   pinoLogger: () => boolean;

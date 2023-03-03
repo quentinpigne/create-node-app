@@ -4,7 +4,7 @@ import { Context } from '../../types';
 import { Config } from '../../config/types';
 import { getGeneratorPath } from '../../utils/file';
 import { getEnding, getParams, getRouterType } from './utils';
-import { applyTemplate, registerPartials } from '../handlebars/handlebars';
+import { applyTemplate, registerPartials } from '../../handlebars/handlebars';
 
 type RoutesContext = {
   helloEndpoint: () => boolean;

@@ -4,7 +4,7 @@ import fs from 'fs-extra';
 import Handlebars from 'handlebars';
 
 import capitalize from './helpers/capitalize';
-import { getAllFiles } from '../../utils/file';
+import { getAllFiles } from '../utils/file';
 
 Handlebars.registerHelper('capitalize', capitalize);
 

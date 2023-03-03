@@ -2,7 +2,7 @@ import path from 'path';
 
 import { Context } from '../../types';
 import { getGeneratorPath } from '../../utils/file';
-import { applyTemplate, registerPartials } from '../handlebars/handlebars';
+import { applyTemplate, registerPartials } from '../../handlebars/handlebars';
 
 type ServerContext = {
   headersPartial: () => string;

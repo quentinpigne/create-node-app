@@ -2,7 +2,7 @@ import path from 'path';
 
 import { Context } from '../../types';
 import { getGeneratorPath } from '../../utils/file';
-import { applyTemplate } from '../handlebars/handlebars';
+import { applyTemplate } from '../../handlebars/handlebars';
 
 export const generate = (context: Context): void => {
   if (!context.config.monitoring) return;
