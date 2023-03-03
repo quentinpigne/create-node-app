@@ -17,8 +17,8 @@ export const applyTemplate = (
   subPath?: string[],
 ): void => {
   const templateFilePath: string = Array.isArray(subPath)
-    ? path.join(dirName, 'templates', ...subPath, `${inputFile}.hbs`)
-    : path.join(dirName, 'templates', `${inputFile}.hbs`);
+    ? path.join(dirName, ...subPath, `${inputFile}.hbs`)
+    : path.join(dirName, `${inputFile}.hbs`);
   const templateFile: string = fs.readFileSync(templateFilePath, 'utf8');
   const compiledTemplate: HandlebarsTemplateDelegate = Handlebars.compile(templateFile);
   fs.ensureDirSync(outputPath);
@@ -26,7 +26,7 @@ export const applyTemplate = (
 };
 
 export const registerPartials = (basePath: string, isCustomPath?: boolean): void => {
-  basePath = isCustomPath ? basePath : path.join(basePath, 'templates', 'partials');
+  basePath = isCustomPath ? basePath : path.join(basePath, 'partials');
   getAllFiles(basePath).forEach((file) => {
     const partialName: string = `${file.path.join('-')}-${file.fileName.split('.').slice(0, -1).join('-')}`;
     const partialFilePath: string = Array.isArray(file.path)

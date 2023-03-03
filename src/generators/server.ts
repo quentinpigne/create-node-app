@@ -1,8 +1,8 @@
 import path from 'path';
 
-import { Context } from '../../types';
-import { getGeneratorPath } from '../../utils/file';
-import { applyTemplate, registerPartials } from '../../handlebars/handlebars';
+import { Context } from '../types';
+import { getTemplatePath } from '../utils/file';
+import { applyTemplate, registerPartials } from '../handlebars/handlebars';
 
 type ServerContext = {
   headersPartial: () => string;
@@ -21,7 +21,7 @@ type ServerContext = {
 export const generate = (context: Context): void => {
   if (!context.config.server_side) return;
 
-  const generatorPath: string = getGeneratorPath(context.cliPath, 'server');
+  const generatorPath: string = getTemplatePath(context.cliPath, 'server');
   registerPartials(generatorPath);
 
   const fileExtension: string = context.config.language === 'javascript' ? 'js' : 'ts';

@@ -1,8 +1,8 @@
 import path from 'path';
 
-import { Context } from '../../types';
-import { getGeneratorPath } from '../../utils/file';
-import { applyTemplate } from '../../handlebars/handlebars';
+import { Context } from '../types';
+import { getTemplatePath } from '../utils/file';
+import { applyTemplate } from '../handlebars/handlebars';
 
 type LoggerContext = {
   fastifyFramework: () => boolean;
@@ -15,7 +15,7 @@ export const generate = (context: Context): void => {
     fastifyFramework: () => context.config.framework === 'fastify',
   };
 
-  applyTemplate(templateContext, getGeneratorPath(context.cliPath, 'logger'), fileName, outputPath, undefined, [
+  applyTemplate(templateContext, getTemplatePath(context.cliPath, 'logger'), fileName, outputPath, undefined, [
     context.config.logger,
   ]);
 };

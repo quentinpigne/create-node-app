@@ -30,6 +30,6 @@ export function getAllFiles(dirPath: string, basePath?: string, arrayOfFiles?: F
   return resultArrayOfFiles;
 }
 
-export function getGeneratorPath(cliPath: string, generatorName: string): string {
-  return path.join(cliPath, 'generators', generatorName);
+export function getTemplatePath(cliPath: string, templateName: string): string {
+  return path.join(cliPath, 'templates', templateName);
 }

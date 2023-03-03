@@ -1,9 +1,9 @@
 import path from 'path';
 
-import { Context } from '../../types';
-import { getGeneratorPath } from '../../utils/file';
-import { DatabaseDialect } from '../../utils/database';
-import { applyTemplate } from '../../handlebars/handlebars';
+import { Context } from '../types';
+import { getTemplatePath } from '../utils/file';
+import { DatabaseDialect } from '../utils/database';
+import { applyTemplate } from '../handlebars/handlebars';
 
 type TypeormContext = {
   pinoLogger: () => boolean;
@@ -21,5 +21,5 @@ export const generate = (context: Context): void => {
     dialect: DatabaseDialect[context.config.database],
   };
 
-  applyTemplate(templateContext, getGeneratorPath(context.cliPath, 'typeorm'), fileName, outputPath);
+  applyTemplate(templateContext, getTemplatePath(context.cliPath, 'typeorm'), fileName, outputPath);
 };

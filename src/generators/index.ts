@@ -1,5 +1,5 @@
 export * as controllers from './controllers';
-export * as index from './index/index';
+export * as index from './index-file';
 export * as jestConfig from './jest-config';
 export * as logger from './logger';
 export * as mongoose from './mongoose';

@@ -1,6 +1,6 @@
-import { Context } from '../../types';
-import { getGeneratorPath } from '../../utils/file';
-import { applyTemplate } from '../../handlebars/handlebars';
+import { Context } from '../types';
+import { getTemplatePath } from '../utils/file';
+import { applyTemplate } from '../handlebars/handlebars';
 
 type JestConfigContext = {
   typescript: () => boolean;
@@ -14,5 +14,5 @@ export const generate = (context: Context): void => {
     typescript: () => context.config.language === 'typescript',
   };
 
-  applyTemplate(templateContext, getGeneratorPath(context.cliPath, 'jest-config'), fileName, context.projectPath);
+  applyTemplate(templateContext, getTemplatePath(context.cliPath, 'jest-config'), fileName, context.projectPath);
 };

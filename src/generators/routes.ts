@@ -1,10 +1,10 @@
 import path from 'path';
 
-import { Context } from '../../types';
-import { Config } from '../../config/types';
-import { getGeneratorPath } from '../../utils/file';
-import { getEnding, getParams, getRouterType } from './utils';
-import { applyTemplate, registerPartials } from '../../handlebars/handlebars';
+import { Context } from '../types';
+import { Config } from '../config/types';
+import { getTemplatePath } from '../utils/file';
+import { getEnding, getParams, getRouterType } from './utils/routes';
+import { applyTemplate, registerPartials } from '../handlebars/handlebars';
 
 type RoutesContext = {
   helloEndpoint: () => boolean;
@@ -24,8 +24,8 @@ type HelloEndpointContext = {
 export const generate = (context: Context): void => {
   if (!context.config.routing) return;
 
-  const generatorPath: string = getGeneratorPath(context.cliPath, 'routes');
-  registerPartials(path.join(generatorPath, 'templates', 'index', 'partials'), true);
+  const generatorPath: string = getTemplatePath(context.cliPath, 'routes');
+  registerPartials(path.join(generatorPath, 'index', 'partials'), true);
 
   const fileExtension: string = context.config.language === 'javascript' ? 'js' : 'ts';
   const outputPath: string = path.join(context.projectPath, 'config', 'routes');
@@ -44,7 +44,7 @@ export const generate = (context: Context): void => {
   applyTemplate(templateContext, generatorPath, fileName, outputPath, undefined, ['index']);
 
   if (!context.config.hello_endpoint) return;
-  registerPartials(path.join(generatorPath, 'templates', 'hello', 'partials'), true);
+  registerPartials(path.join(generatorPath, 'hello', 'partials'), true);
 
   fileName = `hello.${fileExtension}`;
   const helloEndpointTemplateContext: HelloEndpointContext = {

@@ -1,6 +1,6 @@
-import { Context } from '../../types';
-import { getGeneratorPath } from '../../utils/file';
-import { applyTemplate } from '../../handlebars/handlebars';
+import { Context } from '../types';
+import { getTemplatePath } from '../utils/file';
+import { applyTemplate } from '../handlebars/handlebars';
 
 type ReadmeContext = {
   project_name: string;
@@ -16,7 +16,7 @@ export const generate = (context: Context): void => {
 
   applyTemplate(
     templateContext,
-    getGeneratorPath(context.cliPath, 'readme'),
+    getTemplatePath(context.cliPath, 'readme'),
     fileName,
     context.projectPath,
     'README.md',

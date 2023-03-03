@@ -17,6 +17,8 @@ import * as generators from './generators';
 
 import { CommanderOptions, Context, Generator } from './types';
 
+const __dirname: string = path.dirname(url.fileURLToPath(import.meta.url));
+
 const nameAndOptions = (): CommanderOptions => {
   let projectName: string = '';
   const program: Command = new Command(packageJsonCli.name)
@@ -38,7 +40,7 @@ async function init(): Promise<void> {
 
   const context: Context = {
     cliVersion: packageJsonCli.version,
-    cliPath: path.dirname(url.fileURLToPath(import.meta.url)),
+    cliPath: path.resolve(__dirname, '..'),
     projectName,
     projectPath,
     config: starterConfig,
